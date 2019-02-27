@@ -183,7 +183,7 @@ class PyJWS(object):
             raise DecodeError('Not enough segments')
 
         try:
-            header_data = base64url_decode(header_segment)
+            header_data = base64url_decode(header_segment + '==')
         except (TypeError, binascii.Error):
             raise DecodeError('Invalid header padding')
 
@@ -196,12 +196,12 @@ class PyJWS(object):
             raise DecodeError('Invalid header string: must be a json object')
 
         try:
-            payload = base64url_decode(payload_segment)
+            payload = base64url_decode(payload_segment + '==')
         except (TypeError, binascii.Error):
             raise DecodeError('Invalid payload padding')
 
         try:
-            signature = base64url_decode(crypto_segment)
+            signature = base64url_decode(crypto_segment + '==')
         except (TypeError, binascii.Error):
             raise DecodeError('Invalid crypto padding')
 
